@@ -1,6 +1,7 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const path = require('path')
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
+const nodmailer = require('nodemailer');
 
 const app = express()
 const port = 5000
@@ -18,6 +19,42 @@ app.set('view engine', 'ejs')
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, './src/views/index.html'));
   });
+
+app.use(express.json())
+
+// app.get('/', (req, res) => {
+//   res.sendFile(__dirname +'/index.html')
+// })
+
+app.post('/', (req,res) => {
+    console.log(req.body)
+
+    const transporter = nodmailer.createTransport({
+        service: "gmail",
+        auth: {
+            user:'dk301442@gmail.com',
+            pass: "ralowgbcijqqvlmz"
+        }
+    })
+
+    const mailoption = {
+        from: req.body.email,
+        to: 'dk301442@gmail.com',
+        subject: `message from ${req.body.email}: ${req.body.name}`,
+        text: req.body.message
+    }
+
+    transporter.sendMail(mailoption, (error, info)=>{
+        if(error){
+            console.log(error)
+            res.send('error')
+        }
+        else{
+            console.log("Email sent")
+            res.send('success')
+        }
+    })
+})
 
 app.use(bodyParser.urlencoded({ extended: true }))
 

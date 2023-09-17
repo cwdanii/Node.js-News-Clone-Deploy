@@ -1,14 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danyal</title>
+    <title>email form</title>
 </head>
+
 <body>
 
-    <h1>Danyal khan</h1>
-    <h5>Website for testing cyclic</h5>
-    
+    <form class="form" action="/" method="post" id="personform" name="personform">
+
+        <p>name</p>
+        <input type="text" name="name" id="personname" placeholder="Type your name here">
+        <p>email</p>
+        <input type="email" name="email" id="personemail" placeholder="Type your email here">
+        <p>message</p>
+        <input type="text" name="message" id="personmessage" placeholder="Type your message here">
+        <button type="submit" value="send message" class="btn">Submit</button>
+    </form>
+
+    <!-- <script src="../script.js"></script> -->
+
+    <script>
+        console.log("heelo mailer")
+
+        const form = document.getElementById('personform')
+        const name = document.getElementById('personname')
+        const email = document.getElementById('personemail')
+        const message = document.getElementById('personmessage')
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let formdata = {
+                name: name.value,
+                email: email.value,
+                message: message.value
+            }
+
+            console.log(formdata)
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/');
+            xhr.setRequestHeader('content-type', 'application/json')
+            xhr.onload = function () {
+                console.log(xhr.responseText);
+                if (xhr.responseText == 'success') {
+                    alert('email sent');
+                    name.value = "";
+                    email.value = "";
+                    message.value = "";
+                }
+                else {
+                    alert('something is going wrong')
+                }
+            }
+
+            xhr.send(JSON.stringify(formdata));
+
+        });
+    </script>
 </body>
+
 </html>
