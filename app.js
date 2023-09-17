@@ -14,7 +14,7 @@ app.use('/js', express.static(__dirname + 'public/js'))
 
 // Templating Engine
 app.set('views', './src/views')
-app.set('view engine', 'ejs')
+// app.set('view engine', 'ejs')
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, './src/views/index.html'));
