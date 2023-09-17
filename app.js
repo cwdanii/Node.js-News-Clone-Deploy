@@ -56,7 +56,7 @@ app.post('/', (req,res) => {
     })
 })
 
-app.use(bodyParser.urlencoded({ extended: true }))
+// app.use(bodyParser.urlencoded({ extended: true }))
 
 // Routes
 const newsRouter = require('./src/routes/news')
